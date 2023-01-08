@@ -1,0 +1,75 @@
+#include <bits/stdc++.h>
+// #include <ext/pb_ds/assoc_container.hpp>
+// #include <ext/pb_ds/tree_policy.hpp>
+#define ll long long
+#define ull unsigned long long int
+#define pb push_back
+#define mp make_pair
+#define INF 1e18+9
+#define endl '\n'
+// using namespace __gnu_pbds;
+using namespace std;
+#define MOD 1000000007
+#define MAX 1000001
+#define rep(i,a,b) for(int i=a;i<b;i++)
+#define vi vector<int>
+#define vii vector<vector<int> >
+#define pi pair<int,int>
+#define pi pair<int,pair<int,int>>
+
+// typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_set;
+
+void file_i_0(){
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+    #ifndef ONLINE_JUDGE
+	freopen("input.txt","r",stdin);
+	freopen("output.txt","w",stdout);
+    #endif       
+}
+
+void solve(){
+	int n,m; cin>>n>>m;
+	vector<int> a(m);
+	for(int i=0;i<m;i++){
+		cin>>a[i];
+		a[i]--;
+	}
+	vector<int> cnt(n);
+	for(int i=0;i<m;i++) 
+		++cnt[a[i]];
+	auto check = [&](int t){
+		long long fr = 0, need = 0;
+		for(int i=0;i<n;i++){
+			if (t >= cnt[i])
+				fr += (t - cnt[i]) / 2;
+			else
+				need += cnt[i] - t;
+		}
+		return need <= fr;
+	};
+	int l = 0, r = 2 * m;
+	int res = -1;
+	while (l <= r){
+		int m = (l + r) / 2;
+		if (check(m)){
+			res = m;
+			r = m - 1;
+		}
+		else{
+			l = m + 1;
+		}
+	}
+	cout<<res<<endl;
+}
+
+int main(){
+	file_i_0();
+	int t; 
+	t = 1;
+	cin>>t;
+	while(t--){
+		solve();
+	}
+}
